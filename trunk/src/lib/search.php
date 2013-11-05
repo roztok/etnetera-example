@@ -2,7 +2,9 @@
 
 require_once __DIR__."/../leolos/mysqldb.php";
 
-
+/**
+* Vysledek hledani
+*/
 class SearchItem extends Leolos\MysqlDb\DBClass {
 
     protected $m_id;
@@ -18,8 +20,6 @@ class SearchItem extends Leolos\MysqlDb\DBClass {
     public function setIp($ip) { $this->set("m_ip", $ip);}
 
     /**
-    *
-    * Leolos/MysqlDb/DBClass use lazy loading
     */
     public function load($row = Null) {
         if( $row === Null ) {
@@ -104,6 +104,10 @@ class SearchItem extends Leolos\MysqlDb\DBClass {
 }
 
 
+/**
+*
+* Seznam vysledku hledani
+*/
 class SearchLogList extends Leolos\MysqlDb\ListObject {
 
     public function __construct(& $sqlConn) {

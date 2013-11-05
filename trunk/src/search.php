@@ -1,6 +1,8 @@
 <?php
 
-
+/**
+* Handler pro vyhledavani
+*/
 function searchScreen($request) {
 
     $repositories = array();
@@ -33,6 +35,15 @@ function searchScreen($request) {
 }
 
 
+/**
+* Handler pro vypis historie vyhledavani
+  pozn:
+    strankovani se provadi na urovni SQL s pouzitim LIMIT syntaxe - LIMIT offset, limit
+    pro strankovani se pouziva offset - od ktereho zaznamenu zobrazujeme, limit pocet zobrazenych zaznamu
+    k vypoctu poctu stranek odkazu na prvni a posledni stranku potrebujeme znat celkovy pocet zaznamu bez
+    omezeni LIMIT - zde je rychlejsi provest dva dotazy, jeden s LIMIT a druhy bez LIMIT s kombinaci count(*)
+    samozrejme za predpokladu, ze se pri dotazu pouziva index
+*/
 function searchHistoryScreen($request) {
 
     DEFINE("RESULTS_ON_PAGE", "5");
@@ -49,14 +60,6 @@ function searchHistoryScreen($request) {
     
     $offset = (($pageNumber-1)*RESULTS_ON_PAGE);
     
-    /*
-    strankovani se provadi na urovni SQL s pouzitim LIMIT syntaxe - LIMIT offset, limit
-    pro strankovani se pouziva offset - od ktereho zaznamenu zobrazujeme, limit pocet zobrazenych zaznamu
-    
-    k vypoctu poctu stranek odkazu na prvni a posledni stranku potrebujeme znat celkovy pocet zaznamu bez
-    omezeni LIMIT - zde je rychlejsi provest dva dotazy, jeden s LIMIT a druhy bez LIMIT s kombinaci count(*)
-    samozrejme za predpokladu, ze se pri dotazu pouziva index
-    */
     $searchHistory->setLimit($offset.", ".RESULTS_ON_PAGE);
     
     $searchHistory->load();
@@ -67,6 +70,18 @@ function searchHistoryScreen($request) {
 }
 
 
+/**
+* Handler pro formular promazani historie
+  zapezpeceni teto stranky je reseno na urvoni http authentication
+  @link http://httpd.apache.org/docs/2.2/howto/auth.html
+  heslo je ulozeno v .htpasswd souboru v adresari etnetera/conf/
+  mimochodem, uzivatel i heslo je pro zjednoduseni shodne s userem do mysql ;)
+  
+  jako ochrana proti CSRF/XSRF se vzdy u odesilani formulare, ktery spracovava data
+  pouziva methoda POST a nasledne presmerovavame na GET. 
+  Navic je zde pouzit nahodne generovany token - idealne jeste pridat
+  casovou platnost tokenu...
+*/
 function clearSearchHistoryScreen($request) {
 
     //CSRF, XSRF policy -> POST method + action token 
@@ -82,6 +97,9 @@ function clearSearchHistoryScreen($request) {
 }
 
 
+/**
+* Proces promazani historie vyhledavani
+*/
 function clearSearchHistoryProcess($request) {
     
     session_start();
