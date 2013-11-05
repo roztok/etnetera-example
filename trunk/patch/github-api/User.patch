@@ -1,0 +1,18 @@
+--- User.php	2013-11-03 19:00:18.000000000 +0100
++++ User.patch.php	2013-11-03 18:59:56.000000000 +0100
+@@ -79,9 +79,13 @@
+      * @param  string $username the username
+      * @return array  list of the user repositories
+      */
+-    public function repositories($username)
++    public function repositories($username, $params = array())
+     {
+-        return $this->get('users/'.rawurlencode($username).'/repos');
++        $uriParams = '';
++        foreach( $params AS $key => $value) {
++            $uriParams .= "$key=$value&";
++        }
++        return $this->get('users/'.rawurlencode($username).'/repos?'.$uriParams);
+     }
+ 
+     /**
