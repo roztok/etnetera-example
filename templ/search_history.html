@@ -1,0 +1,17 @@
+<?php require_once "_header.html"; ?> 
+
+<a href="<?php echo $request->config->control->baseURL; ?>/smazat-historii">smazat historii</a>
+</br>
+<table class="tabulka">
+	<thead>
+		<th>Datum hledání</th>
+		<th>Hledaný dotaz</th>
+		<th>IP adresa klienta</th>
+	</thead>
+	<?php foreach($searchHistory->list AS $search) {
+		$search->toHtmlTable();
+		}//endfor ?>
+</table>
+
+</body>
+</html>

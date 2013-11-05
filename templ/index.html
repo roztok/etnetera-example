@@ -1,0 +1,34 @@
+<?php require_once "_header.html"; ?> 
+<form method="GET" name="search">
+	<fieldset title="Search">
+		<legend>Vyhledávání</legend>
+			<div class="mrt-02em">
+				<label for="username">Username:</label>&nbsp;
+				<input type="text" name="username" id="username" value="<?php echo $username;?>" />
+				<input type="submit" name="send" value="Vyhledat" />
+				<a href="<?php echo $request->config->control->baseURL; ?>/historie-hledani">historie vyhledávání</a>
+			</div>
+	</fieldset>
+</form>
+
+<table class="tabulka">
+	<thead>
+		<th>Název</th>
+		<th>Vytvořeno</th>
+		<th>Popis</th>
+		<th>Jazyky</th>
+		<th>Vlastník</th>
+	</thead>
+	<?php foreach($repositories AS $repo) {?>
+	<tr>
+		<td><?php echo $repo["name"]; ?>&nbsp;|&nbsp;<a href="<?php echo $repo["html_url"]; ?>" target="_blank">GitHub</a></td>
+		<td><?php $dateTime = DateTime::createFromFormat(DateTime::ISO8601, $repo["created_at"]);echo $dateTime->format("d.m.Y"); ?></td>
+		<td><?php echo $repo["description"];?></td>
+		<td><?php echo $repo["language"]; ?></td>
+		<td><a href="<?php echo $repo["owner"]["html_url"];?>" target="_blank"><img src="<?php echo $repo["owner"]["avatar_url"];?>" /></br><?php echo $repo["owner"]["login"];?></a></td>
+	</tr>
+	<?php }//endfor ?>
+</table>
+
+</body>
+</html>
