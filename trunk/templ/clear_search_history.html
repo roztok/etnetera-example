@@ -1,0 +1,19 @@
+<?php require_once "_header.html"; ?> 
+
+<a href="<?php echo $request->config->control->baseURL; ?>/historie-hledani">zpet na historii</a>
+</br>
+
+<form method="POST" action="<?php echo $request->config->control->baseURL; ?>/smazat-historii/clearSearchHistoryProcess">
+	<fieldset title="Smazat historii">
+		<legend>Smazat historii</legend>
+			<div class="mrt-02em">
+				<label for="hours">Zachovat historii za poslednich :</label>&nbsp;
+				<input type="text" name="hours" id="hours" value="" class="w50" /> hodin
+				<input type="submit" name="send" value="Promazat historii hledani" />
+				<input type="hidden" name="actionToken" value="<?php echo $actionToken; ?>" />
+			</div>
+	</fieldset>
+</form>
+
+</body>
+</html>
