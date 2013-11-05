@@ -1,6 +1,6 @@
 <?php require_once "_header.html"; ?> 
 
-<a href="<?php echo $request->config->control->baseURL; ?>/smazat-historii">smazat historii</a>
+<a href="<?php echo $request->config->control->baseURL; ?>">vyhledavani</a>&nbsp;|&nbsp;<a href="<?php echo $request->config->control->baseURL; ?>/smazat-historii">smazat historii</a>
 </br>
 <table class="tabulka">
 	<thead>
@@ -12,6 +12,23 @@
 		$search->toHtmlTable();
 		}//endfor ?>
 </table>
+<?php 
+if ($pageNumber > 1) {
+	echo '<a href="'.$request->config->control->baseURL.'/historie-hledani">prvni stranka</a>&nbsp;|&nbsp;';
+	echo '<a href="'.$request->config->control->baseURL.'/historie-hledani?pageNumber='.($pageNumber-1).'">predchozi stranka</a>';
+} else {
+	echo 'prvni stranka&nbsp;|&nbsp;';
+	echo 'predchozi stranka';
+}
+if ($pageNumber < $pageCount) {
+	echo '&nbsp;|&nbsp;<a href="'.$request->config->control->baseURL.'/historie-hledani?pageNumber='.($pageNumber+1).'">dalsi stranka</a>&nbsp;|&nbsp;';
+	echo '<a href="'.$request->config->control->baseURL.'/historie-hledani?pageNumber='.$pageCount.'">posledni stranka</a>';
+} else {
+	echo '&nbsp;|&nbsp;dalsi stranka&nbsp;|&nbsp;';
+	echo 'posledni stranka';
+}
+
+?>
 
 </body>
 </html>
