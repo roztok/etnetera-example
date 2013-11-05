@@ -61,7 +61,6 @@ function searchHistoryScreen($request) {
     
     $searchHistory->load();
     
-    //print_r($searchHistory->list);
     Leolos\Status\Status::OK();
     require_once "templ/search_history.html";
     return ;
@@ -70,7 +69,7 @@ function searchHistoryScreen($request) {
 
 function clearSearchHistoryScreen($request) {
 
-    //CSRF, XSRF polici - POST method + action token 
+    //CSRF, XSRF policy -> POST method + action token 
     $actionToken = MD5(time());
 
     session_start();
@@ -81,6 +80,7 @@ function clearSearchHistoryScreen($request) {
     require_once "templ/clear_search_history.html";
     return;
 }
+
 
 function clearSearchHistoryProcess($request) {
     
