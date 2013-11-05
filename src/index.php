@@ -21,7 +21,7 @@ class Config {
         /* cesta ke konfiguracnimu souboru nastavena v apache */
         $configFile = getenv('ConfigFile');
         if(!$configFile) {
-            $configFile = '';
+            $configFile = '/var/www/etnetera/conf/etnetera.conf';
         }
         $parser = new Leolos\ConfigParser\ConfigParser($configFile);
         $this->control = new ConfigControl($parser);
